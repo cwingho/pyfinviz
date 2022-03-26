@@ -24,9 +24,13 @@ class Groups:
         OVERVIEW = "110"
         VALUATION = "120"
         PERFORMANCE = "140"
-        CUSTOM = "150"
+        CUSTOM = "152"
 
     def __init__(self, group_option: GroupOption = GroupOption.SECTOR,
                  view_option: ViewOption = ViewOption.OVERVIEW):
         self.main_url = 'https://finviz.com/groups.ashx?' + group_option.value + '&v=' + view_option.value
+
+        if view_option.value == "152":
+            self.main_url = self.main_url + '&c=1,2,14,15,21,22,23,24,25,26'
+
         self.soup, self.table_df = WebScraper.get_single_table_pandas(self.main_url)

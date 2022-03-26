@@ -1,7 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-from fp.fp import FreeProxy
-
 import re
 import numpy as np
 import pandas as pd
@@ -17,14 +15,11 @@ class WebScraper:
         return proxy
 
     @staticmethod
-    def get_soup(main_url, use_proxy=False, remove_imports=True):
+    def get_soup(main_url, remove_imports=True):
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                                  'Chrome/87.0.4280.88 Safari/537.36'}
-        if use_proxy:
-            p = WebScraper.get_proxy()
-            response = requests.get(main_url, headers=headers, proxies={'http': p, 'https': p})
-        else:
-            response = requests.get(main_url, headers=headers)
+       
+        response = requests.get(main_url, headers=headers)
 
         soup = BeautifulSoup(response.content, 'lxml')
         if remove_imports:
